@@ -18,9 +18,8 @@ app.use(cors());
 
 app.get('/api/profiles', async (req, res) => {
   try {
-    // const data = await fetchSheetData(); ← Comment this
-    // res.json(data);
-    res.json({ message: 'Test response' }); // Dummy response
+    const data = await fetchSheetData();
+    res.json(data);
   } catch (err) {
     console.error('Error in /api/profiles:', err);
     res.status(500).json({ error: 'Failed to fetch data' });
