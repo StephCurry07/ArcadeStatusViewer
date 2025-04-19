@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { fetchSheetData } from './utils/fetchSheetData.js';
+import { fetchSheetData } from './src/utils/fetchSheetData.js';
 import cors from 'cors';
 
 const app = express();
@@ -18,17 +18,17 @@ app.use(cors());
 
 app.get('/api/profiles', async (req, res) => {
   try {
-    const data = await fetchSheetData();
-    res.json(data);
+    // const data = await fetchSheetData(); ← Comment this
+    // res.json(data);
+    res.json({ message: 'Test response' }); // Dummy response
   } catch (err) {
     console.error('Error in /api/profiles:', err);
     res.status(500).json({ error: 'Failed to fetch data' });
   }
 });
 
-// Fallback: send index.html for React Router
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+app.get(/^\/(?!api).*/, (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
 app.listen(PORT, () => {

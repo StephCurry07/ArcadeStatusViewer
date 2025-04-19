@@ -1,6 +1,14 @@
 import { google } from 'googleapis';
-import { SHEETS_CONFIG } from './sheetsConfig.js';
 import { calculateArcadePoints } from './calculateArcadePoints.js';
+
+
+const SHEETS_CONFIG = {
+  spreadsheetId: '1x7v0Ympgb9yFSvYdTbaKrujK9Sp4g-cpgY5B-YxzynI',
+  apiKey: process.env.GOOGLE_SHEETS_API_KEY,
+  sheetTitle: 'GCAF25C1-IN-QML-TRU [19 Apr]',
+  sheetId: '1401507694',
+  range: 'A6:K1000',
+};
 
 export const fetchSheetData = async () => {
   try {
