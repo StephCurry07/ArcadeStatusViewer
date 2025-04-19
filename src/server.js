@@ -1,23 +1,36 @@
 import express from 'express';
-import cors from 'cors';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { fetchSheetData } from './utils/fetchSheetData.js';
-import dotenv from 'dotenv';
-dotenv.config();
+import cors from 'cors';
 
 const app = express();
-const PORT = 3000; // or any port you prefer
+const PORT = process.env.PORT || 5000;
+
+// Resolve __dirname in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// Serve frontend
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use(cors());
 
 app.get('/api/profiles', async (req, res) => {
   try {
-    const profiles = await fetchSheetData();
-    res.json(profiles);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch profiles' });
+    const data = await fetchSheetData();
+    res.json(data);
+  } catch (err) {
+    console.error('Error in /api/profiles:', err);
+    res.status(500).json({ error: 'Failed to fetch data' });
   }
 });
 
+// Fallback: send index.html for React Router
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
+});
+
 app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}`);
 });
