@@ -17,18 +17,20 @@ const ProfileInput: React.FC<ProfileInputProps> = ({ onSubmit, isLoading }) => {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     
-    if (!url.trim()) {
+    const trimmedUrl = url.trim();
+
+    if (!trimmedUrl) {
       setError('Please enter a profile URL');
       return;
     }
-    
-    if (!validateUrl(url)) {
+
+    if (!validateUrl(trimmedUrl)) {
       setError('Please enter a valid Google Cloud Skills Boost profile URL');
       return;
     }
-    
+
     setError('');
-    onSubmit(url);
+    onSubmit(trimmedUrl);
   };
 
   return (
