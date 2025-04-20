@@ -13,28 +13,28 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({ profileData }) => {
 
   return (
     <div className="w-full animate-fadeIn">
-      <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-        <h2 className="text-xl font-semibold mb-1 text-gray-800">
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+        <h2 className="text-xl font-semibold mb-1 text-gray-800 dark:text-gray-100">
           Profile Statistics
         </h2>
-        <p className="text-gray-500 mb-4 text-sm truncate">
+        <p className="text-gray-500 dark:text-gray-400 mb-4 text-sm truncate">
           {profileData.profileUrl}
         </p>
         
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div className="flex">
-            <span className="font-medium mr-2 text-gray-700">Access:</span>
+            <span className="font-medium mr-2 text-gray-700 dark:text-gray-300">Access:</span>
             <span className={`${
-              profileData.access === 'All Good' ? 'text-green-600' : 'text-red-600'
+              profileData.access === 'All Good' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
             }`}>
               {profileData.access}
             </span>
           </div>
           
           <div className="flex">
-            <span className="font-medium mr-2 text-gray-700">Milestone:</span>
+            <span className="font-medium mr-2 text-gray-700 dark:text-gray-300">Milestone:</span>
             <span className={`${
-              profileData.milestone === 'Yes' ? 'text-green-600' : 'text-gray-400'
+              profileData.milestone === 'Yes' ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500'
             }`}>
               {profileData.milestone}
             </span>

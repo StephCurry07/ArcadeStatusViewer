@@ -43,7 +43,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-white text-black dark:bg-gray-900 dark:text-white transition-colors duration-300">
       <Header />
       
       <main className="container flex-grow">
@@ -53,7 +53,7 @@ function App() {
         />
         
         {error && (
-          <div className="w-full max-w-2xl mx-auto bg-red-100 text-red-700 p-4 rounded-lg mb-8">
+          <div className="w-full max-w-2xl mx-auto bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200 p-4 rounded-lg mb-8">
             {error}
           </div>
         )}
@@ -62,7 +62,7 @@ function App() {
           <div className="w-full flex justify-center items-center py-16">
             <div className="flex flex-col items-center">
               <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-              <p className="mt-4 text-gray-600">Loading profile data...</p>
+                <p className="mt-4 text-gray-600 dark:text-gray-300">Loading profile data...</p>
             </div>
           </div>
         ) : profileData ? (
@@ -72,13 +72,14 @@ function App() {
         )}
       </main>
       
-      <footer className="bg-white border-t mt-12 py-6">
+      <footer className="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12 py-6">
         <div className="container">
-          <p className="text-center text-gray-500 text-sm">
+          <p className="text-center text-gray-500 dark:text-gray-400 text-sm">
             This is an unofficial tool for Google Cloud Skills Boost profiles. Not affiliated with Google.
           </p>
         </div>
       </footer>
+
     </div>
   );
 }

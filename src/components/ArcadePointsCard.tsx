@@ -12,7 +12,7 @@ const ArcadePointsCard: React.FC<ArcadePointsCardProps> = ({
   arcadeCount 
 }) => {
   return (
-    <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-xl shadow-lg p-6 text-white">
+    <div className="bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-700 dark:to-indigo-800 rounded-xl shadow-lg p-6 text-white">
       <h3 className="text-xl font-semibold mb-4">Arcade Points</h3>
       
       <div className="flex items-end justify-between mb-6">

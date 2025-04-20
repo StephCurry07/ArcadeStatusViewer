@@ -1,6 +1,9 @@
 import { google } from 'googleapis';
 import { calculateArcadePoints } from './calculateArcadePoints.js';
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 const SHEETS_CONFIG = {
   spreadsheetId: '1x7v0Ympgb9yFSvYdTbaKrujK9Sp4g-cpgY5B-YxzynI',
   apiKey: process.env.GOOGLE_SHEETS_API_KEY,

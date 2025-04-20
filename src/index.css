@@ -3,8 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    @apply transition-colors duration-200;
+  }
+  
   body {
-    @apply bg-gray-50 text-gray-900;
+    @apply bg-gray-50 text-gray-900 transition-colors duration-200;
+  }
+
+  /* Apply transitions to all themed elements */
+  *, *::before, *::after {
+    @apply transition-colors duration-200;
   }
 }
 
