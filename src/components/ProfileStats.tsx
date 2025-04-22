@@ -14,6 +14,7 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({ profileData }) => {
   return (
     <div className="w-full animate-fadeIn">
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
+
         <h2 className="text-xl font-semibold mb-1 text-gray-800 dark:text-gray-100">
           Profile Statistics
         </h2>

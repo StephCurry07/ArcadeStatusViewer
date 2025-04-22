@@ -16,16 +16,6 @@ const NoProfileSelected: React.FC = () => {
         Enter a Google Cloud Skills Boost profile URL above to view statistics and calculate arcade points.
       </p>
       
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 max-w-md">
-        <h3 className="font-medium text-gray-700 dark:text-gray-200 mb-2">What are Arcade Points?</h3>
-        <p className="text-sm text-gray-600 dark:text-gray-400">
-          Arcade Points are calculated based on your completed items:
-          <br />
-          • Each Arcade item = 1 point
-          <br />
-          • Each Skill Badge = 0.5 points
-        </p>
-      </div>
     </div>
   );
 };

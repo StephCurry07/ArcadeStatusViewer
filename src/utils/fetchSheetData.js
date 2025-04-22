@@ -1,6 +1,7 @@
 import { google } from 'googleapis';
 import { calculateArcadePoints } from './calculateArcadePoints.js';
-import {format } from 'date-fns'; // Optional, helps with date formatting
+import {format } from 'date-fns';
+import getSkillsBoostName from './getSkillsBoostName.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -74,29 +75,29 @@ export const fetchSheetData = async () => {
     }
 
     const profiles = {};
-
+  
     // Fix 5: Add column index validation
     for (const row of rows) {
       if (!row[0]) continue;
-
       const profile = {
         profileUrl: row[0],
         access: row[2] || 'Unknown',
         milestone: row[3] || 'No',
         skillCount: parseInt(row[4] || '0', 10),
-        skillNames: row[5] || '',
+        skillNames: (row[5] || '').split('|'),
         arcadeCount: parseInt(row[6] || '0', 10),
-        arcadeNames: row[7] || '',
+        arcadeNames: (row[7] || '').split('|'),
         triviaCount: parseInt(row[8] || '0', 10),
-        triviaNames: row[9] || '',
+        triviaNames: (row[9] || '').split('|'),
         labCount: parseInt(row[10] || '0', 10),
-        labNames: row[11] || '',
-        arcadePoints: 0
+        labNames: (row[11] || '').split('|'),
+        arcadePoints: 0,
+        
       };
 
       profile.arcadePoints = calculateArcadePoints(
         profile.arcadeCount + profile.triviaCount,
-        profile.skillCount
+        profile.skillCount, profile.arcadeNames
       );
       
       profiles[profile.profileUrl] = profile;

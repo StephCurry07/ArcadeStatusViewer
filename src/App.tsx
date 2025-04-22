@@ -4,6 +4,7 @@ import Header from './components/Header';
 import ProfileInput from './components/ProfileInput';
 import ProfileStats from './components/ProfileStats';
 import NoProfileSelected from './components/NoProfileSelected';
+import Leaderboard from './components/Leaderboard'
 
 function App() {
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
@@ -58,6 +59,7 @@ function App() {
           </div>
         )}
         
+
         {isLoading ? (
           <div className="w-full flex justify-center items-center py-16">
             <div className="flex flex-col items-center">
@@ -70,6 +72,9 @@ function App() {
         ) : (
           <NoProfileSelected />
         )}
+
+        <br /><br />
+        <Leaderboard profiles={profiles} />
       </main>
       
       <footer className="bg-white dark:bg-gray-800 border-t dark:border-gray-700 mt-12 py-6">

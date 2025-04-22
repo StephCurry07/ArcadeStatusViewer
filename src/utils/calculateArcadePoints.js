@@ -1,7 +1,14 @@
-/**
- * Calculate arcade points based on the formula:
- * Arcade Points = Number of arcade items + (Number of skill badges * 0.5)
- */
-export const calculateArcadePoints = (arcadeCount, skillCount)=> {
-  return arcadeCount + (skillCount * 0.5);
+export const calculateArcadePoints = (arcadeCount, skillCount, arcadeNames)=> {
+  const specialGameSet = new Set(
+    arcadeNames.filter(name =>
+      name.includes('TechCare') || name.includes('Certification Zone')
+    )
+  );
+  
+  const specialGames = specialGameSet.size;
+  const regularArcadePoints = arcadeCount - specialGames;
+  const specialGamePoints = specialGames * 2;
+  const skillBadgePoints = skillCount * 0.5;
+  
+  return regularArcadePoints + specialGamePoints + skillBadgePoints;
 };
