@@ -3,13 +3,13 @@ export interface ProfileData {
   access: string;
   milestone: string;
   skillCount: number;
-  skillNames: string;
+  skillNames: string[];
   arcadeCount: number;
-  arcadeNames: string;
+  arcadeNames: string[];
   triviaCount: number;
-  triviaNames: string;
+  triviaNames: string[];
   labCount: number;
-  labNames: string;
+  labNames: string[];
   arcadePoints: number;
 }
 

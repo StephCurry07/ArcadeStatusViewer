@@ -4,12 +4,16 @@ interface ArcadePointsCardProps {
   arcadePoints: number;
   skillCount: number;
   arcadeCount: number;
+  bonusCount: number;
+  triviaCount: number;
 }
 
 const ArcadePointsCard: React.FC<ArcadePointsCardProps> = ({ 
   arcadePoints, 
   skillCount, 
-  arcadeCount 
+  arcadeCount,
+  bonusCount,
+  triviaCount
 }) => {
   return (
     <div className="bg-gradient-to-br from-blue-600 to-indigo-700 dark:from-blue-700 dark:to-indigo-800 rounded-xl shadow-lg p-6 text-white">
@@ -22,8 +26,8 @@ const ArcadePointsCard: React.FC<ArcadePointsCardProps> = ({
       
       <div className="space-y-3">
         <div className="flex justify-between items-center text-sm">
-          <span>Arcade Items</span>
-          <span className="font-medium">{arcadeCount} × 1.0 = {arcadeCount}</span>
+          <span>Arcade Games</span>
+          <span className="font-medium">{arcadeCount - bonusCount} × 1.0 = {(arcadeCount - bonusCount).toFixed(1)}</span>
         </div>
         
         <div className="flex justify-between items-center text-sm">
@@ -31,6 +35,16 @@ const ArcadePointsCard: React.FC<ArcadePointsCardProps> = ({
           <span className="font-medium">{skillCount} × 0.5 = {(skillCount * 0.5).toFixed(1)}</span>
         </div>
         
+        <div className="flex justify-between items-center text-sm">
+          <span>Bonus Games</span>
+          <span className="font-medium">{bonusCount} × 2.0 = {(bonusCount * 2).toFixed(1)}</span>
+        </div>
+
+        <div className="flex justify-between items-center text-sm">
+          <span>Trivia</span>
+          <span className="font-medium">{triviaCount} × 1.0 = {(triviaCount).toFixed(1)}</span>
+        </div>
+
         <div className="pt-2 mt-2 border-t border-white border-opacity-20">
           <div className="flex justify-between items-center">
             <span className="font-medium">Total Points</span>

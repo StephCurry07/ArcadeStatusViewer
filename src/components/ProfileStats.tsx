@@ -1,43 +1,75 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Lightbulb, Award, GraduationCap, FlaskConical } from 'lucide-react';
 import { ProfileData } from '../types';
 import StatCard from './StatCard';
 import ArcadePointsCard from './ArcadePointsCard';
 
 interface ProfileStatsProps {
-  profileData: ProfileData | null;
+  profileData: ProfileData;
 }
 
 const ProfileStats: React.FC<ProfileStatsProps> = ({ profileData }) => {
-  if (!profileData) return null;
+  const [profileName, setProfileName] = useState('');
+  const [loading, setLoading] = useState(true);
+
+  const specialGameSet = new Set(
+    profileData.arcadeNames.filter(name =>
+      name.includes('TechCare') || name.includes('Certification Zone')
+    )
+  );
+
+  useEffect(() => {
+    const fetchProfileName = async () => {
+      setLoading(true);
+      try {
+        const nameResponse = await fetch(`/api/fetch-profile-names?profiles=${[profileData.profileUrl].join(',')}`);
+        
+        if (!nameResponse.ok) {
+          throw new Error('Error fetching profile name');
+        }
+
+        const nameData = await nameResponse.json();
+        const name = nameData[profileData.profileUrl];
+
+        setProfileName(name || 'Name not available');
+
+      } catch (error) {
+        console.error('Error fetching profile data:', error);
+        setProfileName('Error fetching name');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (profileData.profileUrl) {
+      fetchProfileName();
+    }
+  }, [profileData.profileUrl]);
 
   return (
     <div className="w-full animate-fadeIn">
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mb-8">
-
-        <h2 className="text-xl font-semibold mb-1 text-gray-800 dark:text-gray-100">
+        <h2 className="text-xl underline font-semibold mb-2 text-gray-800 dark:text-gray-100">
           Profile Statistics
         </h2>
-        <p className="text-gray-500 dark:text-gray-400 mb-4 text-sm truncate">
-          {profileData.profileUrl}
-        </p>
         
-        <div className="grid grid-cols-2 gap-4 text-sm">
-          <div className="flex">
-            <span className="font-medium mr-2 text-gray-700 dark:text-gray-300">Access:</span>
-            <span className={`${
-              profileData.access === 'All Good' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'
-            }`}>
-              {profileData.access}
+        <div className="space-y-4">
+          {/* Profile Name */}
+          <div className="flex items-center space-x-2">
+            <span className="font-medium text-gray-700 dark:text-gray-300">Name:</span>
+            {/* Conditional rendering for the profile name */}
+            <span className={`font-semibold text-gray-900 dark:text-gray-100 ${loading ? 'italic text-gray-500' : ''}`}>
+              {loading ? 'Loading...' : profileName}
             </span>
           </div>
           
-          <div className="flex">
-            <span className="font-medium mr-2 text-gray-700 dark:text-gray-300">Milestone:</span>
-            <span className={`${
-              profileData.milestone === 'Yes' ? 'text-green-600 dark:text-green-400' : 'text-gray-400 dark:text-gray-500'
-            }`}>
-              {profileData.milestone}
+          {/* Profile URL */}
+          <div className="flex items-center space-x-2">
+            <span className="font-medium text-gray-700 dark:text-gray-300">Profile URL:</span>
+            <span className="font-semibold text-sm text-blue-600 dark:text-blue-400 truncate">
+              <a href={profileData.profileUrl} target="_blank" rel="noopener noreferrer">
+                {profileData.profileUrl}
+              </a>
             </span>
           </div>
         </div>
@@ -48,20 +80,22 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({ profileData }) => {
           arcadePoints={profileData.arcadePoints}
           skillCount={profileData.skillCount}
           arcadeCount={profileData.arcadeCount}
+          bonusCount={specialGameSet.size}
+          triviaCount={profileData.triviaCount}
         />
         
         <StatCard
           title="Skill Badges"
           count={profileData.skillCount}
-          names={profileData.skillNames}
+          names={Array.isArray(profileData.skillNames) ? profileData.skillNames : [profileData.skillNames]}
           icon={<Award size={24} className="text-white" />}
           color="bg-yellow-500"
         />
         
         <StatCard
-          title="Arcade Items"
+          title="Arcade Games"
           count={profileData.arcadeCount}
-          names={profileData.arcadeNames}
+          names={Array.isArray(profileData.arcadeNames) ? profileData.arcadeNames : [profileData.arcadeNames]}
           icon={<GraduationCap size={24} className="text-white" />}
           color="bg-green-500"
         />
@@ -71,7 +105,7 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({ profileData }) => {
         <StatCard
           title="Trivia Completions"
           count={profileData.triviaCount}
-          names={profileData.triviaNames}
+          names={Array.isArray(profileData.triviaNames) ? profileData.triviaNames : [profileData.triviaNames]}
           icon={<Lightbulb size={24} className="text-white" />}
           color="bg-blue-500"
         />
@@ -79,7 +113,7 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({ profileData }) => {
         <StatCard
           title="Lab Completions"
           count={profileData.labCount}
-          names={profileData.labNames}
+          names={Array.isArray(profileData.labNames) ? profileData.labNames : [profileData.labNames]}
           icon={<FlaskConical size={24} className="text-white" />}
           color="bg-purple-500"
         />

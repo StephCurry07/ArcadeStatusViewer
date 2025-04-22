@@ -3,7 +3,7 @@ import React from 'react';
 interface StatCardProps {
   title: string;
   count: number;
-  names: string;
+  names: string[];
   icon: React.ReactNode;
   color: string;
 }
@@ -23,15 +23,18 @@ const StatCard: React.FC<StatCardProps> = ({ title, count, names, icon, color })
         <div className="text-sm text-gray-500 dark:text-gray-400">Completed</div>
       </div>
       
-      {names ? (
-        <div className="mt-2 text-sm text-gray-600 dark:text-gray-400 line-clamp-2" title={names}>
-          {names}
+      {names && names.length > 0 ? (
+        <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          {names.map((name, index) => (
+            <div key={index} className="whitespace-pre-line">{name}</div>
+          ))}
         </div>
       ) : (
         <div className="mt-2 text-sm text-gray-400 dark:text-gray-500 italic">
           No {title.toLowerCase()} completed yet
         </div>
       )}
+
     </div>
   );
 };

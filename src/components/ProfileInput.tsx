@@ -71,7 +71,7 @@ const ProfileInput: React.FC<ProfileInputProps> = ({ onSubmit, isLoading }) => {
         )}
         
         <div className="mt-4 text-gray-600 dark:text-gray-400 text-sm">
-          <p>Example: https://www.cloudskillsboost.google/public_profiles/0201af2b-c2ca-46ab-92ce-2c2fca6a536d</p>
+          <p>Example: https://www.cloudskillsboost.google/public_profiles/6b23bb32-8114-498d-9c81-542d8f6c703f</p>
         </div>
       </form>
     </div>
