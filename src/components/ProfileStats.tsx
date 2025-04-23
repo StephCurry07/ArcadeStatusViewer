@@ -19,26 +19,37 @@ const ProfileStats: React.FC<ProfileStatsProps> = ({ profileData }) => {
   );
 
   useEffect(() => {
-    const fetchProfileName = async () => {
-      setLoading(true);
-      try {
-        const nameResponse = await fetch(`/api/fetch-profile-names?profiles=${[profileData.profileUrl].join(',')}`);
+      const fetchProfileName = async () => {
+        setLoading(true);
         
-        if (!nameResponse.ok) {
-          throw new Error('Error fetching profile name');
+        // Check for cached name in session storage
+        const cachedName = sessionStorage.getItem(profileData.profileUrl);
+        if (cachedName) {
+          setProfileName(cachedName);
+          setLoading(false);
+          return; // Exit early if we have a cached name
         }
-
-        const nameData = await nameResponse.json();
-        const name = nameData[profileData.profileUrl];
-
-        setProfileName(name || 'Name not available');
-
-      } catch (error) {
-        console.error('Error fetching profile data:', error);
-        setProfileName('Error fetching name');
-      } finally {
-        setLoading(false);
-      }
+        
+        try {
+          const nameResponse = await fetch(`/api/fetch-profile-names?profiles=${[profileData.profileUrl].join(',')}`);
+          
+          if (!nameResponse.ok) {
+            throw new Error('Error fetching profile name');
+          }
+  
+          const nameData = await nameResponse.json();
+          const name = nameData[profileData.profileUrl];
+  
+          // Set the profile name and store it in session storage
+          setProfileName(name || 'Name not available');
+          sessionStorage.setItem(profileData.profileUrl, name || 'Name not available');
+  
+        } catch (error) {
+          console.error('Error fetching profile data:', error);
+          setProfileName('Error fetching name');
+        } finally {
+          setLoading(false);
+        }
     };
 
     if (profileData.profileUrl) {

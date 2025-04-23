@@ -9,6 +9,7 @@ interface StatCardProps {
 }
 
 const StatCard: React.FC<StatCardProps> = ({ title, count, names, icon, color }) => {
+  const cleanName = (name: string) => name.replace(/\s*\[.*?\]\s*$/g, '');
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 transition-all duration-300 hover:shadow-lg">
       <div className="flex items-center mb-4">
@@ -26,7 +27,7 @@ const StatCard: React.FC<StatCardProps> = ({ title, count, names, icon, color })
       {names && names.length > 0 ? (
         <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
           {names.map((name, index) => (
-            <div key={index} className="whitespace-pre-line">{name}</div>
+            <div key={index}className="whitespace-pre-line">{cleanName(name)}</div>
           ))}
         </div>
       ) : (
